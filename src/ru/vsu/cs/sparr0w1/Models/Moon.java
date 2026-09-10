@@ -8,6 +8,7 @@ public class Moon extends Model{
     }
     @Override
     public void render(Graphics2D g) {
-
+        g.setColor(Color.DARK_GRAY);
+        g.fillOval(this.positionX, this.positionY, this.width, this.height);
     }
 }

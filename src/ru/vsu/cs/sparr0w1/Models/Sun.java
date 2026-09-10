@@ -8,6 +8,7 @@ public class Sun extends Model {
     }
     @Override
     public void render(Graphics2D g) {
-
+        g.setColor(Color.YELLOW);
+        g.fillOval(this.positionX, this.positionY, this.width, this.height);
     }
 }
