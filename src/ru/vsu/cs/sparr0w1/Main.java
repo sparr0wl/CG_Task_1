@@ -1,6 +1,8 @@
 package ru.vsu.cs.sparr0w1;
 
 import ru.vsu.cs.sparr0w1.UI.MainWindow;
+import ru.vsu.cs.sparr0w1.Render.Renderer;
+import ru.vsu.cs.sparr0w1.Render.Scene;
 
 import javax.swing.*;
 
@@ -9,7 +11,10 @@ public class Main {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new MainWindow();
+                Scene scene = new Scene(800, 600);
+                Renderer renderer = new Renderer(scene);
+                renderer.renderFrame();
+                new MainWindow(scene);
             }
         }
         );
