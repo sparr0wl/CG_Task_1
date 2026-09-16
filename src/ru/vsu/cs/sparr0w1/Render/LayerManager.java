@@ -2,6 +2,7 @@ package ru.vsu.cs.sparr0w1.Render;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.awt.image.RescaleOp;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -23,6 +24,10 @@ public class LayerManager {
     }
 
     public synchronized void renderFrame() {
+        renderFrame(1.0f);
+    }
+
+    public synchronized void renderFrame(float brightness) {
         BufferedImage nextFrame = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D graphics = nextFrame.createGraphics();
         try {
@@ -32,7 +37,17 @@ public class LayerManager {
         } finally {
             graphics.dispose();
         }
+        if (brightness < 1.0f) {
+            new RescaleOp(new float[]{brightness, brightness, brightness, 1.0f},
+                    new float[]{0, 0, 0, 0}, null).filter(nextFrame, nextFrame);
+        }
         currentFrame = nextFrame;
+    }
+
+    public synchronized void updateTimeOfDay(double timeOfDay) {
+        for (Layer layer : layers) {
+            layer.updateTimeOfDay(timeOfDay, width, height);
+        }
     }
 
     public BufferedImage getCurrentFrame() {

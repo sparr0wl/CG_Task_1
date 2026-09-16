@@ -36,4 +36,12 @@ public class Layer {
             layerGraphics.dispose();
         }
     }
+
+    public synchronized void updateTimeOfDay(double timeOfDay, int sceneWidth, int sceneHeight) {
+        for (Model element : elements) {
+            if (element instanceof TimeAware) {
+                ((TimeAware) element).setTimeOfDay(timeOfDay, sceneWidth, sceneHeight);
+            }
+        }
+    }
 }

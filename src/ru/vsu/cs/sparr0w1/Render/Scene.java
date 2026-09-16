@@ -31,6 +31,21 @@ public class Scene {
         return foreground;
     }
 
+    /**
+     * Propagates time to time-aware models. Background and foreground receive
+     * ambient lighting, so every object placed there automatically darkens at night.
+     */
+    public void setTimeOfDay(double timeOfDay) {
+        skybox.updateTimeOfDay(timeOfDay);
+        background.updateTimeOfDay(timeOfDay);
+        foreground.updateTimeOfDay(timeOfDay);
+    }
+
+    public float getAmbientBrightness(double timeOfDay) {
+        double sunHeight = Math.sin(2.0 * Math.PI * (timeOfDay - 0.25));
+        return (float) (0.22 + 0.78 * Math.max(0.0, sunHeight));
+    }
+
     public synchronized void composeFrame() {
         BufferedImage nextFrame = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D graphics = nextFrame.createGraphics();
