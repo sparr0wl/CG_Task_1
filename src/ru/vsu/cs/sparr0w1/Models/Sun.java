@@ -20,7 +20,6 @@ public class Sun extends Model implements TimeAware {
             int centerY = positionY + height / 2;
             float radius = Math.max(width, height) / 2.0f;
 
-            // A translucent halo makes the sun read as a light source, not a flat circle.
             sunGraphics.setPaint(new RadialGradientPaint(centerX, centerY, radius * 2.3f,
                     new float[]{0.0f, 0.42f, 1.0f},
                     new Color[]{new Color(255, 235, 59, 105), new Color(255, 193, 7, 35),

@@ -2,7 +2,7 @@ package ru.vsu.cs.sparr0w1.Render;
 
 public class TimeOfDay {
     private double time;
-    private final double speed;
+    private double speed;
 
     public TimeOfDay(double speed) {
         if (speed <= 0) {
@@ -26,4 +26,11 @@ public class TimeOfDay {
         }
     }
 
+    public void updateSpeed(double speed) {
+        this.speed = speed;
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
 }

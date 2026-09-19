@@ -27,4 +27,5 @@ public class Renderer {
     public TimeOfDay getTimeOfDay() {
         return timeOfDay;
     }
+
 }

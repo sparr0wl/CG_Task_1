@@ -28,7 +28,6 @@ public class Moon extends Model implements TimeAware {
                     new Color[]{new Color(250, 250, 240), new Color(210, 211, 202), new Color(127, 132, 136)}));
             moonGraphics.fill(moon);
 
-            // The relative coordinates keep crater placement proportional at any moon size.
             drawCrater(moonGraphics, 0.30, 0.30, 0.18, 0.12, new Color(139, 143, 142, 135));
             drawCrater(moonGraphics, 0.64, 0.25, 0.12, 0.09, new Color(151, 153, 151, 125));
             drawCrater(moonGraphics, 0.57, 0.53, 0.22, 0.15, new Color(130, 134, 134, 145));

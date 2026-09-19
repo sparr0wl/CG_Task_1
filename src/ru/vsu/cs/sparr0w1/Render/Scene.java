@@ -31,10 +31,6 @@ public class Scene {
         return foreground;
     }
 
-    /**
-     * Propagates time to time-aware models. Background and foreground receive
-     * ambient lighting, so every object placed there automatically darkens at night.
-     */
     public void setTimeOfDay(double timeOfDay) {
         skybox.updateTimeOfDay(timeOfDay);
         background.updateTimeOfDay(timeOfDay);

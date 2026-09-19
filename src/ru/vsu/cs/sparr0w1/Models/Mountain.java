@@ -12,12 +12,25 @@ public class Mountain extends Model{
     private final double peakHeight;
     private final double roughRidge;
     private final Random generator;
-    public Mountain(int x, int y, int width, int height, int vertexCount, double peakHeight, double roughRidge, long seed){
+    private final Color topColor;
+    private final Color bottomColor;
+    private final boolean snowCapDisable;
+
+    public Mountain(int x, int y, int width, int height, int vertexCount, double peakHeight, double roughRidge, long seed, boolean snowCapDisable){
+        this(x, y, width, height, vertexCount, peakHeight, roughRidge, seed,
+                new Color(112, 130, 138), new Color(43, 58, 64), snowCapDisable);
+    }
+
+    public Mountain(int x, int y, int width, int height, int vertexCount, double peakHeight, double roughRidge,
+                    long seed, Color topColor, Color bottomColor, boolean snowCapDisable) {
         super(x, y, width, height);
         this.vertexCount = vertexCount;
         this.peakHeight = peakHeight;
         this.roughRidge = roughRidge;
         this.generator = new Random(seed);
+        this.topColor = topColor;
+        this.bottomColor = bottomColor;
+        this.snowCapDisable = snowCapDisable;
     }
 
 
@@ -39,7 +52,6 @@ public class Mountain extends Model{
 
         for (int i = 0; i < vertexCount; i++) {
             double x = (double) i * width / (vertexCount - 1);
-            Point2D point = new Point2D.Double();
             double ridgeY;
             if (x <= peakX) {
                 ridgeY = baseY + (peakY - baseY) * x / peakX;
@@ -65,20 +77,21 @@ public class Mountain extends Model{
         Path2D path = createMountainPath();
         Graphics2D mountainGraphics = (Graphics2D) g.create();
         try {
-            mountainGraphics.setPaint(new GradientPaint(positionX, positionY, new Color(112, 130, 138),
-                    positionX, positionY + height, new Color(43, 58, 64)));
+            mountainGraphics.setPaint(new GradientPaint(positionX, positionY, topColor,
+                    positionX, positionY + height, bottomColor));
             mountainGraphics.fill(path);
 
             mountainGraphics.clip(path);
             mountainGraphics.setPaint(new GradientPaint(positionX + width * 0.42f, positionY + height * 0.18f,
                     new Color(20, 35, 42, 0), positionX + width, positionY + height,
-                    new Color(14, 25, 30, 145)));
+                    new Color(8, 16, 25, 210)));
             mountainGraphics.fillRect(positionX, positionY, width, height);
-
-            Path2D snowCap = createSnowCap();
-            mountainGraphics.setPaint(new GradientPaint(positionX, positionY, new Color(250, 253, 255),
-                    positionX, positionY + height * 0.35f, new Color(187, 211, 223)));
-            mountainGraphics.fill(snowCap);
+            if (!snowCapDisable) {
+                Path2D snowCap = createSnowCap();
+                mountainGraphics.setPaint(new GradientPaint(positionX, positionY, new Color(250, 253, 255),
+                        positionX, positionY + height * 0.35f, new Color(187, 211, 223)));
+                mountainGraphics.fill(snowCap);
+            }
         } finally {
             mountainGraphics.dispose();
         }
@@ -106,7 +119,7 @@ public class Mountain extends Model{
             }
         }
 
-        double snowDepth = height * 0.25;
+        double snowDepth = height * 0.21;
         double snowLimit = vertex.get(peakIndex).getY() + snowDepth;
         int left = peakIndex;
         int right = peakIndex;
